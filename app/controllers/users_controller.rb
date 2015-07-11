@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  require 'twilio-ruby'
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -28,6 +29,16 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        # send the message
+        account_sid = ENV['SID']
+        auth_token = ENV['SECRET_TOKEN']
+        @client = Twilio::REST::Client.new account_sid, auth_token
+
+        message = @client.account.messages.create(:body => "Oh hey #{@user.fname}, welcome to the party. You can now text the house freely. Get info at anytime by asking for help. Love, The House.",
+                                                  :to => @user.phone,
+                                                  :from => "+14159428338")
+        puts message.to
+        # show the response in the browser
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
