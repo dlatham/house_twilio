@@ -44,5 +44,6 @@ group :development, :test do
 
   gem 'twilio-ruby'
   gem 'dotenv-rails'
+  gem 'nokogiri'
 end
 
