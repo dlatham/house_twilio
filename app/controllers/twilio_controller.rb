@@ -13,10 +13,26 @@ class TwilioController < ApplicationController
   end
 
   def sms
-    @message = temperature
-    twiml = Twilio::TwiML::Response.new do |r|
-      r.Message @message
+    # INCOMING MESSAGE FROM TWILIO STARTS HERE
+    # FIRST WE CHECK IF IT IS A REGISTERED SENDER
+    @user = User.find_by phone: params[:From]
+    if @user.blank?
+      twiml = Twilio::TwiML::Response.new do |r|
+        r.Message "Oh hey there stranger! You need to be registered in order to text the house."
+      end
+      render text: twiml.text
+    else
+      @greeting = "Whats up #{@user.fname}? "
+      @message = temperature
+      twiml = Twilio::TwiML::Response.new do |r|
+        r.Message @greeting + @message
+      end
+      render text: twiml.text
     end
-    render text: twiml.text
+  end
+
+  def help
+    # THE HELP FILE - SHOULD BE UPDATED REGULARLY WITH NEW METHODS
+    return "possible commands include: Temp"
   end
 end
