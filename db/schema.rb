@@ -32,10 +32,12 @@ ActiveRecord::Schema.define(version: 20150711204209) do
     t.string   "lname"
     t.string   "phone"
     t.string   "email"
+    t.string   "password_digest"
     t.boolean  "guest"
     t.boolean  "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "admin"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

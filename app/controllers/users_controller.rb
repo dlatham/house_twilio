@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   require 'twilio-ruby'
+  before_filter :authorize
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -80,6 +81,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:fname, :lname, :phone, :email, :guest, :active)
+      params.require(:user).permit(:fname, :lname, :phone, :email, :password, :password_confirmation, :guest, :active, :admin)
     end
 end

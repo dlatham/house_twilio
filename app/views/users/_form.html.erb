@@ -28,6 +28,14 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
+      <%= f.label :password %><br>
+      <%= f.password_field :password %>
+    </div>
+    <div class="field">
+      <%= f.label "Confirm Password" %><br>
+      <%= f.password_field :password_confirmation %>
+    </div>
+  <div class="field">
     <%= f.label :guest %><br>
     <%= f.check_box :guest %>
   </div>
@@ -35,6 +43,10 @@
     <%= f.label :active %><br>
     <%= f.check_box :active %>
   </div>
+  <div class="field">
+      <%= f.label :admin %><br>
+      <%= f.check_box :admin %>
+    </div>
   <div class="actions">
     <%= f.submit %>
   </div>

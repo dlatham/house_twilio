@@ -45,5 +45,6 @@ group :development, :test do
   gem 'twilio-ruby'
   gem 'dotenv-rails'
   gem 'nokogiri'
+  gem 'bcrypt'
 end
 
