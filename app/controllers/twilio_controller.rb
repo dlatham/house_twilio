@@ -22,8 +22,18 @@ class TwilioController < ApplicationController
       end
       render text: twiml.text
     else
+
+      # USER WAS FOUND, LET'S START PARSING
+      # START NEW MESSAGE PARSING HERE!!!!
+      @in = params[:Body].downcase
+      case
+        when @in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")
+          @message = temperature
+        else
+          @message = "I'm not sure I know what you are saying dude."
+      end
       @greeting = "Whats up #{@user.fname}? "
-      @message = temperature
+      #@message = temperature
       twiml = Twilio::TwiML::Response.new do |r|
         r.Message @greeting + @message
       end
