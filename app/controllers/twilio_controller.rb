@@ -2,6 +2,19 @@ class TwilioController < ApplicationController
   require 'twilio-ruby'
   require 'nokogiri'
   require 'open-uri'
+  require 'net/http'
+
+  def lightsdown
+    uri = URI("#{ENV['ISY_HOST']}/rest/nodes/40906/cmd/DON")
+    Net::HTTP.start(uri.host,uri.port) do |http|
+      req = Net::HTTP::Get.new(uri.path)
+      req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+      response = http.request(req)
+    end
+    return "Let me set the mood for you..."
+  end
+
+
 
   def temperature
     # get temperature from all thermostat nodes
@@ -11,6 +24,8 @@ class TwilioController < ApplicationController
     @thefile = @doc.xpath("nodes/node[@id='14 F7 28 1']/property[@id='ST']/@formatted | nodes/node[@id='23 40 20 1']/property[@id='ST']/@formatted")
     return "it's currently #{@thefile[0].value.to_f.round(0)} in the living room and #{@thefile[1].value.to_f.round(0)} in the master bath"
   end
+
+
 
   def sms
     # INCOMING MESSAGE FROM TWILIO STARTS HERE
@@ -27,22 +42,44 @@ class TwilioController < ApplicationController
       # START NEW MESSAGE PARSING HERE!!!!
       @in = params[:Body].downcase
       case
+        when @in.include?("help")
+          @message = help
         when @in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")
           @message = temperature
+        when @in.include?("front") || @in.include?("frontdoor") || @in.include?("gate") || @in.include?("doorbell")
+          @message = "Here's what the gate camera say..."
+          @media = ENV['FRONT_CAMERA_URL']
+        when @in.include?("drive") || @in.include?("driveway") || @in.include?("cars") || @in.include?("street")
+          @message = "Here's what the driveway camera say..."
+          @media = ENV['DRIVEWAY_CAMERA_URL']
+        when @in.include?("lights") && @in.include?("down")
+          @message = lightsdown
         else
           @message = "I'm not sure I know what you are saying dude."
       end
       @greeting = "Whats up #{@user.fname}? "
-      #@message = temperature
-      twiml = Twilio::TwiML::Response.new do |r|
-        r.Message @greeting + @message
+
+      if @media.nil?
+        twiml = Twilio::TwiML::Response.new do |r|
+          r.Message @greeting + @message
+        end
+        render text: twiml.text
+      else
+        twiml = Twilio::TwiML::Response.new do |r|
+          r.Message do |message|
+            message.Body @greeting + @message
+            message.Media @media
+          end
+        end
+        render text: twiml.text
       end
-      render text: twiml.text
     end
   end
 
+
+
   def help
     # THE HELP FILE - SHOULD BE UPDATED REGULARLY WITH NEW METHODS
-    return "possible commands include: Temp"
+    return "Possible commands include: Temperature, Font Gate, Driveway, Light Down, more to come..."
   end
 end
