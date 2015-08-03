@@ -26,6 +26,13 @@ class TwilioController < ApplicationController
   end
 
 
+  def gatecam_proxy
+    image_url = ENV['FRONT_CAMERA_URL']
+    response.headers['Cache-Control'] = "public, max-age=#{84.hours.to_i}"
+    response.headers['Content-Type'] = 'image/jpg'
+    response.headers['Content-Disposition'] = 'inline'
+    render :text => open(image_url, "rb", http_basic_authentication: [ENV['CAM_USER'], ENV['CAM_PASSWORD']]).read
+  end
 
   def sms
     # INCOMING MESSAGE FROM TWILIO STARTS HERE
