@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'static#welcome'
   resources :greetings
   resources :users
   get 'temperature' => 'twilio#temperature'

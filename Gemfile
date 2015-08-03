@@ -25,4 +25,6 @@ gem 'twilio-ruby'
 gem 'dotenv-rails'
 gem 'nokogiri'
 gem 'bcrypt'
+gem 'rails_12factor', group: :production
+ruby "2.2.2"
 
