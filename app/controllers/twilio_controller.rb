@@ -55,7 +55,7 @@ class TwilioController < ApplicationController
           @message = temperature
         when @in.include?("front") || @in.include?("frontdoor") || @in.include?("gate") || @in.include?("doorbell")
           @message = "Here's what the gate camera say..."
-          @media = ENV['FRONT_CAMERA_URL']
+          @media = ENV['BASE_URL'] + '/images/gate.jpg'
         when @in.include?("drive") || @in.include?("driveway") || @in.include?("cars") || @in.include?("street")
           @message = "Here's what the driveway camera say..."
           @media = ENV['DRIVEWAY_CAMERA_URL']
