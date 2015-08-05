@@ -59,6 +59,9 @@ class TwilioController < ApplicationController
         when @in.include?("drive") || @in.include?("driveway") || @in.include?("cars") || @in.include?("street")
           @message = "Here's what the driveway camera say..."
           @media = ENV['DRIVEWAY_CAMERA_URL']
+        when @in.include?("living") || @in.include?("room") || @in.include?("couch") || @in.include?("kitchen")
+          @message = "Here's what the living room camera say..."
+          @media = ENV['LVRM_CAMERA_URL']
         when @in.include?("lights") && @in.include?("down")
           @message = lightsdown
         else

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="335e8418-1fff-4d34-9270-d6182ad0afd8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/twilio_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/twilio_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="house_twilio.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,8 +38,8 @@
       <file leaf-file-name="twilio_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/twilio_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.95013475" vertical-offset="525" max-vertical-offset="1470">
-              <caret line="82" column="7" selection-start-line="82" selection-start-column="7" selection-end-line="82" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.62753034" vertical-offset="465" max-vertical-offset="1515">
+              <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -59,8 +58,8 @@
       <file leaf-file-name=".env" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-              <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+              <caret line="11" column="105" selection-start-line="11" selection-start-column="105" selection-end-line="11" selection-end-column="105" />
               <folding />
             </state>
           </provider>
@@ -150,10 +149,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1507" />
-    <option name="y" value="184" />
+    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="813" />
+    <option name="height" value="812" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -500,7 +498,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1507" y="184" width="1440" height="813" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="812" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -899,14 +897,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/sessions_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
@@ -931,10 +921,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <caret line="11" column="105" selection-start-line="11" selection-start-column="105" selection-end-line="11" selection-end-column="105" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/twilio_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.95013475" vertical-offset="525" max-vertical-offset="1470">
-          <caret line="82" column="7" selection-start-line="82" selection-start-column="7" selection-end-line="82" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.62753034" vertical-offset="465" max-vertical-offset="1515">
+          <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
           <folding />
         </state>
       </provider>
