@@ -5,20 +5,16 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:house_development</jdbc-url>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails house_twilio: test" uuid="57c8c377-5f3f-4caa-9722-5c1f3748eceb">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:house_test</jdbc-url>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails house_twilio: production" uuid="ee90a83c-d373-4f9b-88b2-5c67765b4f08">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:house_production</jdbc-url>
-      <libraries />
     </data-source>
   </component>
 </project>
-

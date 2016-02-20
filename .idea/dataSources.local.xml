@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails house_twilio: development" uuid="f49117a8-458b-493f-92c9-5eec08bb11dd">
+      <secret-storage>memory</secret-storage>
+    </data-source>
+    <data-source name="Rails house_twilio: test" uuid="57c8c377-5f3f-4caa-9722-5c1f3748eceb">
+      <secret-storage>memory</secret-storage>
+    </data-source>
+    <data-source name="Rails house_twilio: production" uuid="ee90a83c-d373-4f9b-88b2-5c67765b4f08">
+      <secret-storage>memory</secret-storage>
+    </data-source>
+  </component>
+</project>

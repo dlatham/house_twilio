@@ -15,6 +15,15 @@ class TwilioController < ApplicationController
   end
 
 
+  def unlockDoor
+    uri = URI("#{ENV['ISY_HOST']}/rest/programs/0013/runThen")
+    Net::HTTP.start(uri.host,uri.port) do |http|
+      req = Net::HTTP::Get.new(uri.path)
+      req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+      response = http.request(req)
+    end
+    return "Unlocked and buzzed in. Did you make it?"
+  end
 
   def temperature
     # get temperature from all thermostat nodes
@@ -62,8 +71,10 @@ class TwilioController < ApplicationController
         when @in.include?("living") || @in.include?("room") || @in.include?("couch") || @in.include?("kitchen")
           @message = "Here's what the living room camera say..."
           @media = ENV['LVRM_CAMERA_URL']
-        when @in.include?("lights") && @in.include?("down")
+        when @in.include?("lights") || @in.include?("down")
           @message = lightsdown
+        when @in.include?("unlock") || @in.include?("buzz")
+          @message = unlockDoor
         else
           @message = "I'm not sure I know what you are saying dude."
       end
@@ -90,6 +101,6 @@ class TwilioController < ApplicationController
 
   def help
     # THE HELP FILE - SHOULD BE UPDATED REGULARLY WITH NEW METHODS
-    return "Possible commands include: Temperature, Font Gate, Driveway, Light Down, more to come..."
+    return "Possible commands include: Temperature, Font Gate, Driveway, Light Down, Unlock and more to come..."
   end
 end
