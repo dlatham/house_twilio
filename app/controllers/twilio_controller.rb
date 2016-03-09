@@ -25,6 +25,16 @@ class TwilioController < ApplicationController
     return "Unlocked and buzzed in. Did you make it?"
   end
 
+  def lockDoor
+    uri = URI("#{ENV['ISY_HOST']}/rest/nodes/ZW002_1/cmd/SECMD/1")
+    Net::HTTP.start(uri.host,uri.port) do |http|
+      req = Net::HTTP::Get.new(uri.path)
+      req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+      response = http.request(req)
+    end
+    return "The front door is locked!"
+  end
+
   def temperature
     # get temperature from all thermostat nodes
     @doc = Nokogiri::XML(open("#{ENV['ISY_HOST']}/rest/status",
@@ -75,6 +85,8 @@ class TwilioController < ApplicationController
           @message = lightsdown
         when @in.include?("unlock") || @in.include?("buzz")
           @message = unlockDoor
+        when @in.include?("lock")
+          @message = lockDoor
         else
           @message = "I'm not sure I know what you are saying dude."
       end
