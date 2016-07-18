@@ -87,20 +87,42 @@ class TwilioController < ApplicationController
           @message = unlockDoor
         when @in.include?("lock")
           @message = lockDoor
+        when @in.include?("test")
+          @message = "This is a test message."
         else
           @message = "I'm not sure I know what you are saying dude."
       end
-      @greeting = "Whats up #{@user.fname}? "
 
+      #---------------------------ADD THE GREETING TO THE MESSAGE----------------------->
+      current_time = Time.now.to_i
+      midnight = Time.now.beginning_of_day.to_i
+      noon = Time.now.middle_of_day.to_i
+      five_pm = Time.now.change(:hour => 17 ).to_i
+      eight_pm = Time.now.change(:hour => 20 ).to_i
+
+      case
+        when midnight.upto(noon).include?(current_time)
+          @greeting = Greeting.limit(1).order("RANDOM()").where(time_of_day: ["morning","all"])
+        when noon.upto(five_pm).include?(current_time)
+          @greeting = Greeting.limit(1).order("RANDOM()").where(time_of_day: ["afternoon","all"])
+        when five_pm.upto(eight_pm).include?(current_time)
+          @greeting = Greeting.limit(1).order("RANDOM()").where(time_of_day: ["evening","all"])
+        when eight_pm.upto(midnight + 1.day).include?(current_time)
+          @greeting = Greeting.limit(1).order("RANDOM()").where(time_of_day: ["night","all"])
+      end
+
+      final_greeting = @greeting.first.text % @user.fname
+
+#----------------------------------SEND THE MESSAGE-------------------------------->
       if @media.nil?
         twiml = Twilio::TwiML::Response.new do |r|
-          r.Message @greeting + @message
+          r.Message final_greeting + " " + @message
         end
         render text: twiml.text
       else
         twiml = Twilio::TwiML::Response.new do |r|
           r.Message do |message|
-            message.Body @greeting + @message
+            message.Body final_greeting + " " + @message
             message.Media @media
           end
         end
