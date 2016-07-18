@@ -94,11 +94,12 @@ class TwilioController < ApplicationController
       end
 
       #---------------------------ADD THE GREETING TO THE MESSAGE----------------------->
-      current_time = Time.now.to_i
-      midnight = Time.now.beginning_of_day.to_i
-      noon = Time.now.middle_of_day.to_i
-      five_pm = Time.now.change(:hour => 17 ).to_i
-      eight_pm = Time.now.change(:hour => 20 ).to_i
+      Time.zone = "Pacific Time (US & Canada)"
+      current_time = Time.zone.now.to_i
+      midnight = Time.zone.now.beginning_of_day.to_i
+      noon = Time.zone.now.middle_of_day.to_i
+      five_pm = Time.zone.now.change(:hour => 17 ).to_i
+      eight_pm = Time.zone.now.change(:hour => 20 ).to_i
 
       case
         when midnight.upto(noon).include?(current_time)
