@@ -62,6 +62,11 @@ class TwilioController < ApplicationController
         r.Message "Oh hey there stranger! You need to be registered in order to text the house."
       end
       render text: twiml.text
+    elsif !@user.active
+        twiml = Twilio::TwiML::Response.new do |r|
+          r.Message "Oh hey there stranger! Your account needs to be active in order to text the house"
+        end
+        render text: twiml.text
     else
 
       # USER WAS FOUND, LET'S START PARSING
