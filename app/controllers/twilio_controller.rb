@@ -70,6 +70,7 @@ class TwilioController < ApplicationController
         end
         render text: twiml.text
     else
+      @guest = @user.guest
 
       # USER WAS FOUND, LET'S START PARSING
       # START NEW MESSAGE PARSING HERE!!!!
@@ -78,22 +79,22 @@ class TwilioController < ApplicationController
         when @in.include?("help")
           log = Log.create(response: 'Help', phone: params[:From], body: params[:Body])
           @message = help
-        when @in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")
+        when (@in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")) && !@guest
           log = Log.create(response: 'Temperature', phone: params[:From], body: params[:Body])
           @message = temperature
-        when @in.include?("front") || @in.include?("frontdoor") || @in.include?("gate") || @in.include?("doorbell")
+        when (@in.include?("front") || @in.include?("frontdoor") || @in.include?("gate") || @in.include?("doorbell")) && !@guest
           log = Log.create(response: 'Gate Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the gate camera say..."
           @media = ENV['BASE_URL'] + '/images/gate.jpg'
-        when @in.include?("drive") || @in.include?("driveway") || @in.include?("cars") || @in.include?("street")
+        when (@in.include?("drive") || @in.include?("driveway") || @in.include?("cars") || @in.include?("street")) && !@guest
           log = Log.create(response: 'Driveway Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the driveway camera say..."
           @media = ENV['DRIVEWAY_CAMERA_URL']
-        when @in.include?("living") || @in.include?("room") || @in.include?("couch") || @in.include?("kitchen")
+        when (@in.include?("living") || @in.include?("room") || @in.include?("couch") || @in.include?("kitchen")) && !@guest
           log = Log.create(response: 'Living Room Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the living room camera say..."
           @media = ENV['LVRM_CAMERA_URL']
-        when @in.include?("lights") || @in.include?("down")
+        when (@in.include?("lights") || @in.include?("down")) && !@guest
           log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
           @message = lightsdown
         when @in.include?("unlock") || @in.include?("buzz")
@@ -102,10 +103,11 @@ class TwilioController < ApplicationController
         when @in.include?("lock")
           log = Log.create(response: 'Lock', phone: params[:From], body: params[:Body])
           @message = lockDoor
-        when @in.include?("test")
+        when (@in.include?("test") || @in.include?("tester")) && !@guest
           log = Log.create(response: 'Test', phone: params[:From], body: params[:Body])
           @message = "This is a test message."
         else
+          log = Log.create(response: 'Unauthorized', phone: params[:From], body: params[:Body])
           @message = "I'm not sure I know what you are saying dude."
       end
 
