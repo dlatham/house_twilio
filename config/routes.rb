@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :logs
   root 'static#welcome'
   resources :greetings
   resources :users

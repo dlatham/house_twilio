@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Log</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Phone</th>
+    <th>Response</th>
+    <th>Request</th>
+    <th colspan="2">Action</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @logs.each do |log| %>
+      <tr>
+        <td><%= log.created_at %></td>
+        <td><%= log.phone %></td>
+        <td><%= log.response %></td>
+        <td><%= log.body %></td>
+        <td><%= link_to 'Show', log %></td>
+        <td><%= link_to 'Destroy', log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

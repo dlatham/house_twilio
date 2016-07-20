@@ -58,11 +58,13 @@ class TwilioController < ApplicationController
     # FIRST WE CHECK IF IT IS A REGISTERED SENDER
     @user = User.find_by phone: params[:From]
     if @user.blank?
+      log = Log.create(response: 'Denied', phone: params[:From], body: params[:Body])
       twiml = Twilio::TwiML::Response.new do |r|
         r.Message "Oh hey there stranger! You need to be registered in order to text the house."
       end
       render text: twiml.text
     elsif !@user.active
+        log = Log.create(response: 'Unauthorized', phone: params[:From], body: params[:Body])
         twiml = Twilio::TwiML::Response.new do |r|
           r.Message "Oh hey there stranger! Your account needs to be active in order to text the house"
         end
@@ -74,25 +76,34 @@ class TwilioController < ApplicationController
       @in = params[:Body].downcase
       case
         when @in.include?("help")
+          log = Log.create(response: 'Help', phone: params[:From], body: params[:Body])
           @message = help
         when @in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")
+          log = Log.create(response: 'Temperature', phone: params[:From], body: params[:Body])
           @message = temperature
         when @in.include?("front") || @in.include?("frontdoor") || @in.include?("gate") || @in.include?("doorbell")
+          log = Log.create(response: 'Gate Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the gate camera say..."
           @media = ENV['BASE_URL'] + '/images/gate.jpg'
         when @in.include?("drive") || @in.include?("driveway") || @in.include?("cars") || @in.include?("street")
+          log = Log.create(response: 'Driveway Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the driveway camera say..."
           @media = ENV['DRIVEWAY_CAMERA_URL']
         when @in.include?("living") || @in.include?("room") || @in.include?("couch") || @in.include?("kitchen")
+          log = Log.create(response: 'Living Room Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the living room camera say..."
           @media = ENV['LVRM_CAMERA_URL']
         when @in.include?("lights") || @in.include?("down")
+          log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
           @message = lightsdown
         when @in.include?("unlock") || @in.include?("buzz")
+          log = Log.create(response: 'Unlock', phone: params[:From], body: params[:Body])
           @message = unlockDoor
         when @in.include?("lock")
+          log = Log.create(response: 'Lock', phone: params[:From], body: params[:Body])
           @message = lockDoor
         when @in.include?("test")
+          log = Log.create(response: 'Test', phone: params[:From], body: params[:Body])
           @message = "This is a test message."
         else
           @message = "I'm not sure I know what you are saying dude."
