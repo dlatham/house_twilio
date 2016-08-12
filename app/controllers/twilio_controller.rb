@@ -106,6 +106,9 @@ class TwilioController < ApplicationController
         when (@in.include?("test") || @in.include?("tester")) && !@guest
           log = Log.create(response: 'Test', phone: params[:From], body: params[:Body])
           @message = "This is a test message."
+        when @in.include?("panic")
+          log = Log.create(response: 'Test', phone: params[:From], body: params[:Body])
+          @message = "I'm releasing the dogs!"
         else
           log = Log.create(response: 'Unauthorized', phone: params[:From], body: params[:Body])
           @message = "I'm not sure I know what you are saying dude."
