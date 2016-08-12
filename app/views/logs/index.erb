@@ -16,7 +16,7 @@
   <tbody>
   <% @logs.each do |log| %>
       <tr>
-        <td><%= log.created_at %></td>
+        <td><%= log.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%y at %I:%M%p") %></td>
         <td><%= log.phone %></td>
         <td><%= log.response %></td>
         <td><%= log.body %></td>
