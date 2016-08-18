@@ -107,8 +107,11 @@ class TwilioController < ApplicationController
           log = Log.create(response: 'Test', phone: params[:From], body: params[:Body])
           @message = "This is a test message."
         when @in.include?("panic")
-          log = Log.create(response: 'Test', phone: params[:From], body: params[:Body])
+          log = Log.create(response: 'Info', phone: params[:From], body: params[:Body])
           @message = "I'm releasing the dogs!"
+        when @in.include?("wifi password")
+          log = Log.create(response: 'Info', phone: params[:From], body: params[:Body])
+          @message = "The wifi password is: #{ENV['WIFI_PASSWORD']}"
         else
           log = Log.create(response: 'Unauthorized', phone: params[:From], body: params[:Body])
           @message = "I'm not sure I know what you are saying dude."
