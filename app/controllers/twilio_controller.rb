@@ -25,6 +25,27 @@ class TwilioController < ApplicationController
 
   end
 
+  def frontlight (state)
+    if state == 'on'
+      uri = URI("#{ENV['ISY_HOST']}/rest/nodes/34%206E%202B%202/cmd/DON")
+      Net::HTTP.start(uri.host,uri.port) do |http|
+        req = Net::HTTP::Get.new(uri.path)
+        req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+        response = http.request(req)
+      end
+      return "I just turned the front door light on."
+    else
+      uri = URI("#{ENV['ISY_HOST']}/rest/nodes/34%206E%202B%202/cmd/DOF")
+      Net::HTTP.start(uri.host,uri.port) do |http|
+        req = Net::HTTP::Get.new(uri.path)
+        req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+        response = http.request(req)
+      end
+      return "I just turned the front door light off."
+    end
+
+  end
+
   def lightsdown
     uri = URI("#{ENV['ISY_HOST']}/rest/nodes/40906/cmd/DON")
     Net::HTTP.start(uri.host,uri.port) do |http|
@@ -103,6 +124,12 @@ class TwilioController < ApplicationController
         when (@in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")) && !@guest
           log = Log.create(response: 'Temperature', phone: params[:From], body: params[:Body])
           @message = temperature
+        when ((@in.include?("front") || @in.include?("door") || @in.include?("gate")) && @in.include?("light") && @in.include?("off")) && !@guest
+          @message = frontlight 'off'
+          log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
+        when ((@in.include?("front") || @in.include?("door") || @in.include?("gate")) && @in.include?("light") && @in.include?("on")) && !@guest
+          @message = frontlight 'on'
+          log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
         when (@in.include?("front") || @in.include?("frontdoor") || @in.include?("gate") || @in.include?("doorbell")) && !@guest
           log = Log.create(response: 'Gate Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the gate camera say..."
