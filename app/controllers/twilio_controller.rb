@@ -4,6 +4,27 @@ class TwilioController < ApplicationController
   require 'open-uri'
   require 'net/http'
 
+  def outsidelights (state)
+    if state == 'on'
+      uri = URI("#{ENV['ISY_HOST']}/rest/nodes/41302/cmd/DON")
+        Net::HTTP.start(uri.host,uri.port) do |http|
+          req = Net::HTTP::Get.new(uri.path)
+          req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+          response = http.request(req)
+        end
+      return "I just turned the backyard lights on."
+    else
+      uri = URI("#{ENV['ISY_HOST']}/rest/nodes/41302/cmd/DOF")
+      Net::HTTP.start(uri.host,uri.port) do |http|
+        req = Net::HTTP::Get.new(uri.path)
+        req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+        response = http.request(req)
+      end
+      return "I just turned the backyard lights off."
+    end
+
+  end
+
   def lightsdown
     uri = URI("#{ENV['ISY_HOST']}/rest/nodes/40906/cmd/DON")
     Net::HTTP.start(uri.host,uri.port) do |http|
@@ -94,6 +115,12 @@ class TwilioController < ApplicationController
           log = Log.create(response: 'Living Room Camera', phone: params[:From], body: params[:Body])
           @message = "Here's what the living room camera say..."
           @media = ENV['LVRM_CAMERA_URL']
+        when ((@in.include?("outside") || @in.include?("backyard") || @in.include?("side")) && @in.include?("lights") && @in.include?("off")) && !@guest
+          @message = outsidelights 'off'
+          log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
+        when ((@in.include?("outside") || @in.include?("backyard") || @in.include?("side")) && @in.include?("lights") && @in.include?("on")) && !@guest
+          @message = outsidelights 'on'
+          log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
         when (@in.include?("lights") || @in.include?("down")) && !@guest
           log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
           @message = lightsdown
