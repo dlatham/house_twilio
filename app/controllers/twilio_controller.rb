@@ -46,6 +46,27 @@ class TwilioController < ApplicationController
 
   end
 
+  def fireplace (state)
+    if state == 'on'
+      uri = URI("#{ENV['ISY_HOST']}/rest/programs/0018/runThen")
+      Net::HTTP.start(uri.host,uri.port) do |http|
+        req = Net::HTTP::Get.new(uri.path)
+        req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+        response = http.request(req)
+      end
+      return "Break out the marshmallows. Fire is on."
+    else
+      uri = URI("#{ENV['ISY_HOST']}/rest/programs/0018/runElse")
+      Net::HTTP.start(uri.host,uri.port) do |http|
+        req = Net::HTTP::Get.new(uri.path)
+        req.basic_auth ENV['ISY_USER'], ENV['ISY_PASSWORD']
+        response = http.request(req)
+      end
+      return "The fireplace is off."
+    end
+
+  end
+
   def lightsdown
     uri = URI("#{ENV['ISY_HOST']}/rest/nodes/40906/cmd/DON")
     Net::HTTP.start(uri.host,uri.port) do |http|
@@ -124,6 +145,12 @@ class TwilioController < ApplicationController
         when (@in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")) && !@guest
           log = Log.create(response: 'Temperature', phone: params[:From], body: params[:Body])
           @message = temperature
+        when ((@in.include?("fireplace") || @in.include?("fire")) && @in.include?("off")) && !@guest
+          @message = fireplace 'off'
+          log = Log.create(response: 'Fireplace', phone: params[:From], body: params[:Body])
+        when ((@in.include?("fireplace") || @in.include?("fire")) && @in.include?("on")) && !@guest
+          @message = fireplace 'on'
+          log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
         when ((@in.include?("front") || @in.include?("door") || @in.include?("gate")) && @in.include?("light") && @in.include?("off")) && !@guest
           @message = frontlight 'off'
           log = Log.create(response: 'Lights', phone: params[:From], body: params[:Body])
