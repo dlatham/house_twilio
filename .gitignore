@@ -17,5 +17,7 @@
 /tmp
 .env
 
+# Other stuff
 .DS_Store
 /.idea
+/db/seeds.rb

@@ -26,5 +26,6 @@ gem 'dotenv-rails'
 gem 'nokogiri'
 gem 'bcrypt'
 gem 'rails_12factor', group: :production
+gem 'git-version-bump'
 ruby "2.2.2"
 

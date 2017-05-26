@@ -27,3 +27,13 @@ Currently, a lot of the private stuff (usernames, passwords, URLs, etc) are stor
 
 ### Lastly, a Twilio account...
 You'll need one. And the SMS webhook will need to be pointed at the /sms route to hit the API. The application reads the standard POST variables provided by Twilio's SMS service to recognize the user and understand how to respond.
+
+
+
+## Changelog
+----------------
+ - 0.1 : First beta version
+ - 0.2 : Added git-version-bump gem and the ability to check version w/ notes via SMS
+   - 2 Add releases and the ability to reference the release from SMS
+
+

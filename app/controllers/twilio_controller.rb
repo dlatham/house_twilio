@@ -3,6 +3,11 @@ class TwilioController < ApplicationController
   require 'nokogiri'
   require 'open-uri'
   require 'net/http'
+  require 'git-version-bump'
+
+  def version
+    return "The current version is #{GVB.version}."
+  end
 
   def outsidelights (state)
     if state == 'on'
@@ -142,6 +147,9 @@ class TwilioController < ApplicationController
         when @in.include?("help")
           log = Log.create(response: 'Help', phone: params[:From], body: params[:Body])
           @message = help
+        when @in.include?("version")
+          log = Log.create(response: 'Info', phone: params[:From], body: params[:Body])
+          @message = version
         when (@in.include?("temp") || @in.include?("temperature") || @in.include?("hot") || @in.include?("cold")) && !@guest
           log = Log.create(response: 'Temperature', phone: params[:From], body: params[:Body])
           @message = temperature
