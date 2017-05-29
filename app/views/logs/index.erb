@@ -7,6 +7,7 @@
   <tr>
     <th>Date</th>
     <th>Phone</th>
+    <th>User</th>
     <th>Response</th>
     <th>Request</th>
     <th colspan="2">Action</th>
@@ -18,6 +19,7 @@
       <tr>
         <td><%= log.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%y at %I:%M%p") %></td>
         <td><%= log.phone %></td>
+        <td><%= log.fname %></td>
         <td><%= log.response %></td>
         <td><%= log.body %></td>
         <td><%= link_to 'Show', log %></td>
