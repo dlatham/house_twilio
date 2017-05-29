@@ -27,5 +27,6 @@ gem 'nokogiri'
 gem 'bcrypt'
 gem 'rails_12factor', group: :production
 gem 'git-version-bump'
+gem 'will_paginate', '~> 3.1.0'
 ruby "2.2.2"
 

@@ -6,7 +6,7 @@ class TwilioController < ApplicationController
   require 'git-version-bump'
 
   def version
-    return "The current version is #{GVB.version}."
+    return "The current version is #{GVB.version} which was launched on #{GVB.date}."
   end
 
   def outsidelights (state)
