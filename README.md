@@ -25,6 +25,30 @@ The other beauty of using SMS is that you can invite people with multiple phone 
 
 Currently, a lot of the private stuff (usernames, passwords, URLs, etc) are stored as environment variables in the .env root file for development and server envvironment variables for production. They are referenced throughout the code but there are quite a few required to run this sucker and I don't have any of them documented becuse the code is so custom and single-purpose right now. I'll fix that eventually.
 
+Environment Variables:
+```
+CAM_PASSWORD:             CAMERA_PASSWORD
+CAM_USER:                 CAMERA_USER
+DRIVEWAY_CAMERA_URL:      URL_TO_DRIVEWAY_CAMERA_PICTURE
+FRONT_CAMERA_URL:         URL_TO_FRONT_CAMERA_PICTURE
+ISY_HOST:                 BASE_URL_TO_ISY
+ISY_PASSWORD:             
+ISY_USER:                 
+LVRM_CAMERA_URL:          URL_TO_LIVING_ROOM_CAMERA_PICTURE
+SECRET_KEY_BASE:          
+SECRET_TOKEN:             TWILIO_TOKEN
+SID:                      TWILIO_SID
+WIFI_PASSWORD:            WIFI_PASSWORD_FOR_REQUESTS
+```
+
+### Installation
+ - Clone the repository locally
+ - Create your .env file at the root
+ - Bundle Install
+ - Create and migrate the database `rake db:create` and `rake db:migrate`
+ - Seed the database: `rake db:seed`
+ - Launch the server
+
 ### Lastly, a Twilio account...
 You'll need one. And the SMS webhook will need to be pointed at the /sms route to hit the API. The application reads the standard POST variables provided by Twilio's SMS service to recognize the user and understand how to respond.
 
