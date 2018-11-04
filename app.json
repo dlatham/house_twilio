@@ -1,6 +1,7 @@
 {
   "name": "house_twilio",
   "description": "A simple little rails app to respond to home automation SMS requests",
+  "stack": "heroku-18",
   "scripts": {
   },
   "env": {
