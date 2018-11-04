@@ -1,0 +1,72 @@
+{
+  "name": "house_twilio",
+  "description": "A simple little rails app to respond to home automation SMS requests",
+  "scripts": {
+  },
+  "env": {
+    "BASE_URL": {
+      "required": true
+    },
+    "CAM_PASSWORD": {
+      "required": true
+    },
+    "CAM_USER": {
+      "required": true
+    },
+    "DRIVEWAY_CAMERA_URL": {
+      "required": true
+    },
+    "FRONT_CAMERA_URL": {
+      "required": true
+    },
+    "ISY_HOST": {
+      "required": true
+    },
+    "ISY_PASSWORD": {
+      "required": true
+    },
+    "ISY_USER": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "LVRM_CAMERA_URL": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "SECRET_TOKEN": {
+      "required": true
+    },
+    "SID": {
+      "required": true
+    },
+    "WIFI_PASSWORD": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
