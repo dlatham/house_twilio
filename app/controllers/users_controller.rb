@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   require 'twilio-ruby'
-  before_filter :authorize
+  before_action :authorize #rails 5.1 fix
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users

@@ -1,5 +1,5 @@
 class GreetingsController < ApplicationController
-  before_filter :authorize
+  before_action :authorize
   before_action :set_greeting, only: [:show, :edit, :update, :destroy]
 
   # GET /greetings
